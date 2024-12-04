@@ -4,16 +4,16 @@
     define('SITE_URL', 'http://127.0.0.1/H.O.M.E.S-4G/');
     define('ABOUT_IMG_PATH', SITE_URL. 'images/about/');
     define('CAROUSEL_IMG_PATH', SITE_URL. 'images/carousel/');
+    define('INCLUSIONS_IMG_PATH', SITE_URL. 'images/inclusions/');
     define('FACILITIES_IMG_PATH', SITE_URL. 'images/facilities/');
-    define('ROOMS_IMG_PATH', SITE_URL. 'images/rooms/');
     define('USERS_IMG_PATH', SITE_URL. 'images/users/');
 
     // backend upload process needs this data
     define('UPLOAD_IMAGE_PATH', $_SERVER['DOCUMENT_ROOT'].'/H.O.M.E.S-4G/images/');
     define('ABOUT_FOLDER','about/');
     define('CAROUSEL_FOLDER', 'carousel/');
+    define('INCLUSIONS_FOLDER', 'inclusions/');
     define('FACILITIES_FOLDER', 'facilities/');
-    define('ROOMS_FOLDER', 'rooms/');
     define('USERS_FOLDER', 'users/');
 
     // PHPMAILER 
@@ -90,14 +90,14 @@
 
     function uploadSVGImage($image, $folder)
     {
-        $valid_mime = ['image/svg+xml'];
+        $valid_mime = ['image/jpeg', 'image/png', 'image/webp'];
         $img_mime = $image['type'];
 
         if(!in_array($img_mime, $valid_mime)){
             return 'inv_img'; //invalid image mime or format
         } 
-        else if($image['size'] / (1024*1024) > 1){
-            return 'inv_size'; //invalid size greater than 1mb
+        else if($image['size'] / (1024*1024) > 10){
+            return 'inv_size'; //invalid size greater than 10mb
         } 
         else{
             $ext = pathinfo($image['name'], PATHINFO_EXTENSION);

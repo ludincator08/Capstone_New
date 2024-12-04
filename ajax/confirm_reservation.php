@@ -39,17 +39,17 @@
     }
     else {
       session_start();
-      $_SESSION['room'];
+      $_SESSION['facilities'];
 
-      // check room is available or not
+      // check facilities is available or not
       // Calculate difference in hours instead of days
       $interval = $checkin_date->diff($checkout_date);
       $hours_diff = ($interval->days * 24) + $interval->h;  // Get total hours
 
-      $payment = $_SESSION['room']['price'] * $hours_diff;  // Calculate payment based on hours
+      $payment = $_SESSION['facilities']['price'] * $hours_diff;  // Calculate payment based on hours
 
-      $_SESSION['room']['payment'] = $payment;
-      $_SESSION['room']['available'] = true;
+      $_SESSION['facilities']['payment'] = $payment;
+      $_SESSION['facilities']['available'] = true;
 
       $result = json_encode(["status"=>'available', "hours"=>$hours_diff, "payment"=>$payment]);
       echo $result;

@@ -24,7 +24,7 @@ function add_image(){
             alert('error', 'Only JPG and PNG images are allowed!');
         }
         else if(this.responseText == 'inv_size'){
-            alert('error', 'Image should be less than 2MB!');
+            alert('error', 'Image should be less than 10MB!');
         }
         else if(this.responseText == 'upd_failed'){
             alert('error', 'Image upload failed. Server Down!');
@@ -52,21 +52,24 @@ function get_carousel(){
 }
 
 function rem_image(val){
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "ajax/carousel_crud.php", true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    if(confirm('Are you sure you want to remove this carousel image?')){
 
-    xhr.onload = function(){
-        if(this.responseText == 1){
-            alert('success', 'Image removed!');
-            get_carousel();
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "ajax/carousel_crud.php", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+        xhr.onload = function(){
+            if(this.responseText == 1){
+                alert('success', 'Image removed!');
+                get_carousel();
+            }
+            else{
+                alert('error', 'Server down!');
+            }
         }
-        else{
-            alert('error', 'Server down!');
-        }
+    
+        xhr.send('rem_image=' + val);
     }
-
-    xhr.send('rem_image=' + val);
 }
 
 window.onload = function(){

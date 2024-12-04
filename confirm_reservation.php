@@ -16,13 +16,13 @@
   <?php require('inc/header.php'); 
 
   /*
-  Check room id from url is present or not
+  Check facilities id from url is present or not
   Shutdown  mode  is active or not 
   User logged in or not
   */
   
   if(!isset($_GET['id']) || $general_r['shutdown'] == true){
-    redirect('rooms.php');
+    redirect('facilities.php');
   }
   else if(!(isset($_SESSION['login']) && $_SESSION['login'] == true)){
     redirect('index.php');
@@ -31,19 +31,19 @@
   // filter and get reserve data 
   $data = filteration($_GET);
 
-  $room_res = select("SELECT * FROM `rooms` WHERE `id`=? AND `status`=? AND `removed`=?", [$data['id'],1,0], 'iii');
+  $facilities_res = select("SELECT * FROM `facilities` WHERE `id`=? AND `status`=? AND `removed`=?", [$data['id'],1,0], 'iii');
 
-  if(mysqli_num_rows($room_res) == 0)
+  if(mysqli_num_rows($facilities_res) == 0)
   {
-    redirect('rooms.php');
+    redirect('facilities.php');
   }
 
-  $room_data = mysqli_fetch_assoc($room_res);
+  $facilities_data = mysqli_fetch_assoc($facilities_res);
 
-  $_SESSION['room'] = [
-    "id" => $room_data['id'],
-    "name" => $room_data['name'],
-    "price" => $room_data['price'],
+  $_SESSION['facilities'] = [
+    "id" => $facilities_data['id'],
+    "name" => $facilities_data['name'],
+    "price" => $facilities_data['price'],
     "payment" => null,
     "available" => false,
   ];
@@ -62,7 +62,7 @@
       <div style="font-size:14px;">
         <a href="index.php" class="text-secondary text-decoration-none">HOME</a>
         <span class="text-secondary"> > </span>
-        <a href="rooms.php" class="text-secondary text-decoration-none">ROOMS</a>
+        <a href="facilities.php" class="text-secondary text-decoration-none">FACILITIES</a>
         <span class="text-secondary"> > </span>
         <a href="#" class="text-secondary text-decoration-none">CONFIRM</a>
       </div>
@@ -70,21 +70,21 @@
 
     <div class="col-lg-7 col-md-12 px-4">
       <?php 
-        $room_thumb = ROOMS_IMG_PATH.'thumbnail.jpg';
-        $room_q = mysqli_query($con, "SELECT * FROM `room_images` 
-          WHERE `room_id` = '$room_data[id]'
+        $facilities_thumb = FACILITIES_IMG_PATH.'thumbnail.jpg';
+        $facilities_q = mysqli_query($con, "SELECT * FROM `facility_images` 
+          WHERE `facility_id` = '$facilities_data[id]'
           AND `thumb` = '1'");
 
-        if(mysqli_num_rows($room_q) > 0){
-          $room_row = mysqli_fetch_assoc($room_q);
-          $room_thumb = ROOMS_IMG_PATH.$room_row['image'];
+        if(mysqli_num_rows($facilities_q) > 0){
+          $facilities_row = mysqli_fetch_assoc($facilities_q);
+          $facilities_thumb = FACILITIES_IMG_PATH.$facilities_row['image'];
         }
 
         echo <<< data
           <div class="card p-3  shadow-sm rounded">
-            <img src="$room_thumb" class="img-fluid rounded mb-3">
-            <h5>$room_data[name]</h5>
-            <h6>₱$room_data[price] per Hour</h6>
+            <img src="$facilities_thumb" class="img-fluid rounded mb-3">
+            <h5>$facilities_data[name]</h5>
+            <h6>₱$facilities_data[price] per hour</h6>
           </div>
         data;
 
@@ -94,7 +94,7 @@
     <div class="col-lg-5 col-md-12 px-4">
       <div class="card mb-4 border-0 shadow-sm rounded-3">
         <div class="card-body">
-          <form  id="reservation_form">
+          <form action="pay_now.php" id="reservation_form">
             <h6 class="mb-3">RESERVATION DETAILS</h6>
             <div class="row">
               <div class="col-md-6 mb-3">

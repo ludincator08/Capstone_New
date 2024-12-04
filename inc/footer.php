@@ -7,8 +7,8 @@
         <div class="col-lg-4 p-4">
             <h5 class="mb-3">Links</h5>
             <a href="index.php" class="d-inline-block mb-2 text-dark text-decoration-none">Home</a> <br>
-            <a href="rooms.php" class="d-inline-block mb-2 text-dark text-decoration-none">Rooms</a> <br>
             <a href="facilities.php" class="d-inline-block mb-2 text-dark text-decoration-none">Facilities</a> <br>
+            <a href="inclusions.php" class="d-inline-block mb-2 text-dark text-decoration-none">Inclusions</a> <br>
             <a href="contact.php" class="d-inline-block mb-2 text-dark text-decoration-none">Contact Us</a> <br>
             <a href="about.php" class="d-inline-block mb-2 text-dark text-decoration-none">About</a>
         </div>
@@ -169,7 +169,7 @@
             }
             else {
                 let fileUrl = window.location.href.split('/').pop().split('?').shift();
-                if(fileUrl == 'room_details.php'){
+                if(fileUrl == 'facilities_details.php'){
                     window.location =  window.location.href;
                 }
                 else{
@@ -223,10 +223,10 @@
         xhr.send(data);
     });
 
-    function checkLoginToReserve(status, room_id)
+    function checkLoginToReserve(status, facility_id)
     {
         if(status){
-            window.location.href='confirm_reservation.php?id='+room_id;
+            window.location.href='confirm_reservation.php?id='+facility_id;
         }
         else {
             alert('error', 'Please login to reserve now!');

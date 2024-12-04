@@ -10,10 +10,10 @@
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link me-2" href="rooms.php">Facilities</a>
+                    <a class="nav-link me-2" href="facilities.php">Facilities</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link me-2" href="facilities.php">Inclusions</a>
+                    <a class="nav-link me-2" href="inclusions.php">Inclusions</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link me-2" href="contact.php">Contact Us</a>

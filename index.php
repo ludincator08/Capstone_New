@@ -39,7 +39,7 @@
             $path = CAROUSEL_IMG_PATH;
             echo <<< data
               <div class="swiper-slide">
-                <img src="$path$row[image]" class="w-100 d-block" />
+                <img src="$path$row[image]"  style="width: 1356px; height: 417px; object-fit: cover;" class="w-100 d-block" />
               </div>
             data;
             // style="height: 240px; object-fit: cover;" //add that in img to adjust that height of the image
@@ -52,34 +52,39 @@
   <!-- Check availability form  -->
   <div class="container availability-form">
     <div class="row">
-      <div class="col-lg-12 bg-white shadow p-4 rounded">
+      <div class="col-lg-12 bg-white shadow p-4 rounded mb-5">
         <h5 class="mb-4">Check Booking Availability</h5>
         <form>
           <div class="row align-items-end">
-            <div class="col-lg-3 mb-3">
-              <label class="form-label" style="font-weight: 500">Check-in</label>
-              <input type="date" class="form-control shadow-none" />
-            </div>
-            <div class="col-lg-3 mb-3">
-              <label class="form-label" style="font-weight: 500">Check-out</label>
-              <input type="date" class="form-control shadow-none" />
-            </div>
-            <div class="col-lg-3 mb-3">
-              <label class="form-label" style="font-weight: 500">Adult</label>
+            <div class="col-lg-4 mb-3">
+              <label class="form-label" style="font-weight: 500">FACILITY</label>
+              <!--<input type="date" class="form-control shadow-none" /> -->
               <select class="form-select shadow-none">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="1">BASKETBALL COURT</option>
+                <option value="2">CLUB HOUSE</option>
+                <option value="3">SWIMMING POOL</option>
               </select>
             </div>
-            <div class="col-lg-2 mb-3">
+            <div class="col-lg-4 mb-3">
+              <label class="form-label" style="font-weight: 500">DATE</label>
+              <input type="date" class="form-control shadow-none" />
+            </div>
+            <div class="col-lg-3 mb-3">
+              <label class="form-label" style="font-weight: 500">TIME</label>
+              <select class="form-select shadow-none">
+                <option value="1">08:00-10:00</option>
+                <option value="2">10:00-12:00</option>
+                <option value="3">12:00-02:00</option>
+              </select>
+            </div>
+            <!--<div class="col-lg-2 mb-3">
               <label class="form-label" style="font-weight: 500">Children</label>
               <select class="form-select shadow-none">
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
-            </div>
+            </div>-->
             <div class="col-lg-1 mb-lg-3 mt-2">
               <button
                 type="submit"
@@ -93,50 +98,59 @@
     </div>
   </div>
 
-  <!-- OUR ROOMS -->
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-6 col-md-4 mb-4 order-lg-1 order-md-1 order-1">
+        <img src="images/about/about.jpg" alt="" class="w-100">
+      </div>
+      <div class="col-lg-6 col-md-5 mb-4 order-lg-1 order-md-1 order-2">
+        <h1 class="mb-3">Lorem ipsum dolor sit.</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptate error aut, hic facere iste sequi vero?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          Voluptate error aut, hic facere iste sequi vero?
+        </p>
+        <div class="col-lg-12 mt-5">
+          <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Read More >>></a>
+        </div>
+      </div>
+      <!-- Img -->
+    </div>
+  </div>
+
+  <!-- OUR FACILITIESS -->
   <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
 
   <div class="container">
     <div class="row">
 
     <?php 
-      $room_res = select("SELECT * FROM `rooms` WHERE `status`=? AND `removed`=? ORDER BY `id` DESC LIMIT 3", [1, 0], 'ii');
+      $facility_res = select("SELECT * FROM `facilities` WHERE `status`=? AND `removed`=? ORDER BY `id` DESC LIMIT 3", [1, 0], 'ii');
 
-      while($room_data = mysqli_fetch_assoc($room_res))
+      while($facility_data = mysqli_fetch_assoc($facility_res))
       {
-        // get features of room
-        $fea_q = mysqli_query($con, "SELECT f.name FROM `features` f 
-          INNER JOIN `room_features`rfea ON f.id = rfea.features_id 
-          WHERE rfea.room_id = '$room_data[id]'");
-          
-        $features_data = ""; 
-        while($fea_res = mysqli_fetch_assoc($fea_q)){
-          $features_data .= "<span class='badge rounded-pill bg-light text-dark text-wrap me-1 mb-1'>
-              $fea_res[name]
-            </span>";
-        }
+        // get inclusions of facility
+        $fac_q = mysqli_query($con, "SELECT inclusion.name FROM `inclusions` inclusion
+        INNER JOIN `facilities_inclusions` r_inclusion ON inclusion.id = r_inclusion.inclusions_id 
+        WHERE r_inclusion.facility_id = $facility_data[id]");
 
-        // get facilities of room
-        $fac_q = mysqli_query($con, "SELECT facility.name FROM `facilities` facility
-        INNER JOIN `room_facilities` r_facility ON facility.id = r_facility.facilities_id 
-        WHERE r_facility.room_id = $room_data[id]");
-
-        $facilities_data = "";
+        $inclusions_data = "";
         while($fac_row = mysqli_fetch_assoc($fac_q)){
-          $facilities_data .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>
+          $inclusions_data .= "<span class='badge rounded-pill bg-light text-dark text-wrap'>
             $fac_row[name]
           </span>";
         }
 
         // get thumbnail of image
-        $room_thumbnail = ROOMS_IMG_PATH.'thumbnail.jpg';
-        $room_q = mysqli_query($con, "SELECT * FROM `room_images` 
-        WHERE `room_id` = '$room_data[id]'
+        $facilities_thumbnail = FACILITIES_IMG_PATH.'thumbnail.jpg';
+        $facilities_q = mysqli_query($con, "SELECT * FROM `facility_images` 
+        WHERE `facility_id` = '$facility_data[id]'
         AND `thumb` = '1'");
 
-        if(mysqli_num_rows($room_q) > 0){
-          $room_row = mysqli_fetch_assoc($room_q);
-          $room_thumbnail = ROOMS_IMG_PATH.$room_row['image'];
+        if(mysqli_num_rows($facilities_q) > 0){
+          $facilities_row = mysqli_fetch_assoc($facilities_q);
+          $facilities_thumbnail = FACILITIES_IMG_PATH.$facilities_row['image'];
         }
 
         $reserve_btn = "";
@@ -146,34 +160,25 @@
           if(isset($_SESSION['login']) && $_SESSION['login'] == true){
             $login = 1;
           }
-          $reserve_btn = "<button onclick='checkLoginToReserve($login, $room_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Reserve Now</button>";
+          $reserve_btn = "<button onclick='checkLoginToReserve($login, $facility_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Reserve Now</button>";
         }
 
-        // Print Room Card
+        // Print Facility Card
         echo <<< data
           <div class="col-lg-4 col-md-6 my-3">
             <div class="card border-0 shadow" style="max-width: 350px; margin: auto">
-              <img src="$room_thumbnail" class="card-img-top" alt="Rooms" />
+              <img src="$facilities_thumbnail" class="card-img-top" alt="... " />
               <div class="card-body">
-                <h5>$room_data[name]</h5>
-                <h6 class="mb-4">₱$room_data[price] per night</h6>
-                <div class="features mb-4">
-                    <h6 class="mb-1">Features</h6>
-                    $features_data
+                <h5>$facility_data[name]</h5>
+                <h6 class="mb-4">₱$facility_data[price] per hour</h6>
+                <div class="Inclusions mb-4">
+                  <h6 class="mb-1">Inclusions</h6>
+                  $inclusions_data
                 </div>
-                <div class="facilities mb-4">
-                  <h6 class="mb-1">Facilities</h6>
-                  $facilities_data
-                </div>
-                <div class="guests mb-4">
-                  <h6 class="mb-1">Guests</h6>
-                  <span
-                    class="badge rounded-pill bg-light text-dark text-wrap">
-                    $room_data[adult] Adults
-                  </span>
-                  <span
-                    class="badge rounded-pill bg-light text-dark text-wrap">
-                    $room_data[children] Children
+                <div class="Description mb-4">
+                  <h6 class="mb-1">Description</h6>
+                  <span class='badge rounded-pill bg-light text-dark text-wrap text-start' style="font-weight: 450;">
+                    $facility_data[description]
                   </span>
                 </div>
                 <div class="rating mb-4">
@@ -187,7 +192,7 @@
                 </div>
                 <div class="d-flex justify-content-evenly mb-2">
                   $reserve_btn
-                  <a href="room_details.php?id=$room_data[id]" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
+                  <a href="facilities_detail.php?id=$facility_data[id]" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
                 </div>
               </div>
             </div>
@@ -200,19 +205,19 @@
       ?>
 
       <div class="col-lg-12 text-center mt-5">
-        <a href="rooms.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms >>></a>
+        <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Facilities >>></a>
       </div>
     </div>
   </div>
 
-  <!-- OUR Facilities -->
+  <!-- OUR Inclusions -->
   <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR INCLUSIONS</h2>
 
   <div class="container">
     <div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
       <?php
 
-        $res = mysqli_query($con, "SELECT * FROM `facilities` ORDER BY `id` DESC LIMIT 5");
+        $res = mysqli_query($con, "SELECT * FROM `inclusions` ORDER BY `id` DESC LIMIT 5");
         $path = FACILITIES_IMG_PATH;
 
         while($row = mysqli_fetch_assoc($res))
@@ -226,7 +231,7 @@
         }
       ?>
       <div class="col-lg-12 text-center mt-5">
-        <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Facilities >>></a>
+        <a href="inclusions.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Inclusions >>></a>
       </div>
     </div>
   </div>
@@ -314,8 +319,8 @@
           </a>
           <br>
           <?php
-            if($contact_r['pn2'] != ''){
-              echo <<< data
+            if($contact_r['pn2'] != 0){
+              echo<<<data
                 <a href="tel: +$contact_r[pn2]" class="d-inline-block mb-2 text-decoration-none text-dark">
                   <i class="bi bi-telephone-fill"></i> +$contact_r[pn2]
                 </a>
@@ -362,6 +367,8 @@
                       <div class="mb-4">
                           <label class="form-label">New Password </label>
                           <input type="password" name="pass" class="form-control shadow-none" required />
+                          <label class="form-label">Confirm Password </label>
+                          <input type="password" name="confirm_pass" class="form-control shadow-none" required />
                           <input type="hidden" name="email">
                           <input type="hidden" name="token">
                       </div>
@@ -421,7 +428,7 @@
       effect: "fade",
       loop: true,
       autoplay: {
-        delay: 3500,
+        delay: 3000,
         disableOnInteraction: false,
       },
     });
@@ -470,11 +477,12 @@
       data.append('email', recovery_form.elements['email'].value);
       data.append('token', recovery_form.elements['token'].value);
       data.append('pass', recovery_form.elements['pass'].value);
+      data.append('confirm_pass', recovery_form.elements['confirm_pass'].value);
       data.append('recover_user', '');
       
       var myModal = document.getElementById('recoveryModal');
       var modal = bootstrap.Modal.getInstance(myModal);
-      modal.hide();
+      modal.show();
       
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "ajax/login_register.php", true);
@@ -483,9 +491,13 @@
           if(this.responseText == 'failed'){
               alert('error', 'Account reset failed!');
           }
+          else if(this.responseText == 'pass_mismatch'){
+                alert('error', 'Password Mismatch!');
+          }
           else{
               alert('success', 'Account Reset successful!');
-              recovery_form.reset(); 
+              recovery_form.reset();
+              modal.hide();
           }
       }
       xhr.send(data);

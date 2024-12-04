@@ -33,7 +33,7 @@ if(isset($_POST['get_carousel'])){
      echo <<< data
         <div class="col-md-4 mb-3">
            <div class="card bg-dark text-white">
-              <img src="$path$row[image]" class="card-img" alt="...">
+              <img src="$path$row[image]" class="card-img" style="wdith: 257px; height: 79px; object-fit: cover;" alt="...">
               <div class="card-img-overlay text-end">
                  <button type="button" onclick="rem_image($row[sr_no])" class="btn btn-danger btn-sm shadow-none">
                     <i class="bi bi-trash"></i>Delete

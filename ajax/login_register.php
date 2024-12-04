@@ -24,7 +24,7 @@ use PHPMailer\PHPMailer\Exception;
     else{
       $page = "index.php";
       $subject = "Account Reset Link";
-      $content = "Reset your account";
+      $content = "Reset your password";
 
     }
 
@@ -161,8 +161,9 @@ use PHPMailer\PHPMailer\Exception;
   {
     $data = filteration($_POST);
 
+    
     $u_exist = select("SELECT * FROM `user_cred` WHERE `email` = ? LIMIT 1", [$data['email']], "s");
-
+    
     if(mysqli_num_rows($u_exist) == 0){
       echo 'inv_email';
     }
@@ -203,14 +204,18 @@ use PHPMailer\PHPMailer\Exception;
   if(isset($_POST['recover_user']))
   {
     $data = filteration($_POST);
-
+    
     $enc_pass = password_hash($data['pass'], PASSWORD_BCRYPT);
-
+    
     $query = "UPDATE `user_cred` SET `password`=?, `token`=?, `t_expire`=? WHERE `email`=? AND `token`=?";
-
+    
     $values = [$enc_pass, null, null, $data['email'], $data['token']];
-
-    if(update($query, $values, "sssss"))
+    
+    if($data['pass'] != $data['confirm_pass']) {
+      echo 'pass_mismatch';
+      exit;
+    }
+    else if(update($query, $values, "sssss"))
     {
       echo 1;
     }

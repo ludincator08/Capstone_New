@@ -31,7 +31,7 @@ adminLogin();
                             <h5 class="card-title m-0">Images</h5>
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-dark shadow-none btn-sm " data-bs-toggle="modal" data-bs-target="#carousel-s">
-                                <i class="bi bi-plus-square"></i>Add
+                                <i class="bi bi-plus-square"></i> Add
                             </button>
                         </div>
                         <div class="row" id="carousel-data">
