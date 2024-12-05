@@ -11,13 +11,13 @@ if(isset($_GET['seen'])){
         $sql = "SELECT * FROM `user_queries` WHERE sr_no = '?'";
         $result = $con->query($sql);    
         $values = [1];
-        
+
         if(update($q, $values, 'i')){
             $_SESSION['alert'] = ['success', 'Mark all as read'];
         }
 
         else if ($result->num_rows==0) {
-            $_SESSION['alert'] = ['error', 'No queries found!'];  
+            $_SESSION['alert'] = ['error', 'There are no unread queries!']; 
 
         }
         
