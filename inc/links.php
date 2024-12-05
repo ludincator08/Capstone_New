@@ -5,32 +5,45 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 <link rel="stylesheet" href="css/common.css">
 
-<?php 
+<?php
+// Ensure session is only started if not already active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-  
-  session_start();
-  date_default_timezone_set('Asia/Manila');
+// Set the default timezone
+date_default_timezone_set('Asia/Manila');
 
+// Avoid duplicate function declarations
+if (!function_exists('filteration')) {
+    function filteration($data) {
+        foreach ($data as $key => $value) {
+            $data[$key] = htmlspecialchars(strip_tags(trim($value)));
+        }
+        return $data;
+    }
+}
 
-  require('admin/inc/db_config.php');
-  require('admin/inc/essentials.php'); 
+// Include required files only once
+require_once('admin/inc/db_config.php');
+require_once('admin/inc/essentials.php');
 
-  
-  $values = [1];
-  
-  $general_q = "SELECT * FROM `settings` WHERE `sr_no`=?";
-  $general_r =mysqli_fetch_assoc(select($general_q, $values, 'i'));
-  $contact_q = "SELECT * FROM `contact_details` WHERE `sr_no`=?";
-  $contact_r =mysqli_fetch_assoc(select($contact_q, $values, 'i'));
+// Fetch general and contact settings
+$values = [1];
 
-  if($general_r['shutdown'])
-  {
+$general_q = "SELECT * FROM `settings` WHERE `sr_no`=?";
+$general_r = mysqli_fetch_assoc(select($general_q, $values, 'i'));
+
+$contact_q = "SELECT * FROM `contact_details` WHERE `sr_no`=?";
+$contact_r = mysqli_fetch_assoc(select($contact_q, $values, 'i'));
+
+// Check if the site is in shutdown mode
+if ($general_r['shutdown']) {
     echo <<< alertbar
-      <div class="bg-danger text-center p-2 fw-bold sticky-top ">
+      <div class="bg-danger text-center p-2 fw-bold sticky-top">
         <i class="bi bi-exclamation-triangle-fill"></i>
-        Bookings are temporary closed!
+        Bookings are temporarily closed!
       </div>
     alertbar;
-  }
-
+}
 ?>
