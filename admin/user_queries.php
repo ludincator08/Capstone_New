@@ -4,6 +4,7 @@ require('inc/essentials.php');
 require('inc/db_config.php');
 adminLogin();
 
+
 if(isset($_GET['seen'])){
     $frm_data = filteration($_GET);
     if($frm_data['seen'] == 'all'){
@@ -175,12 +176,22 @@ if(isset($_GET['del']))
                                     {
                                         $seen = '';
                                         if($row['seen'] !=1){
-                                            $seen = "<a href='?seen=$row[sr_no]' class='btn btn-sm rounded-pill btn-primary'>Mark as read</a> <br>";
+                                            $seen = "<a href='?seen=$row[sr_no]' class='btn btn-sm rounded-pill btn-primary'> 
+                                            <i class='bi bi-check-all' style='color: white'></i> Mark as read</a> <br>";
                                         }
-                                        if($row['seen'] ==1){
-                                            $seen = "<a href='?seen=$row[sr_no]' class='btn btn-sm rounded-pill btn-info'>Reply</a> <br>";
+                                        
+                                        if($row['seen'] == 1){
+                                            $seen = "<button 
+                                                        class='btn btn-sm rounded-pill btn-info reply-btn' 
+                                                        data-bs-toggle='modal' 
+                                                        data-bs-target='#reply' 
+                                                        data-name='$row[name]' 
+                                                        data-subject='Re: " . htmlspecialchars($row['subject'], ENT_QUOTES, 'UTF-8') . "'>
+                                                        <i class='bi bi-reply-all-fill'></i> Reply</button><br>";
                                         }
-                                        $seen .= "<a href='?del=$row[sr_no]' class='btn btn-sm rounded-pill btn-danger mt-2'>Delete</a>";
+                                        
+                                        $seen .= "<a href='?del=$row[sr_no]' class='btn btn-sm rounded-pill btn-danger mt-2 'bi bi-trash'>
+                                        <i class='bi bi-trash'></i> Delete </a> <br>";
                                         echo <<< query
                                             <tr>
                                                 <td>$i</td>
@@ -207,13 +218,45 @@ if(isset($_GET['del']))
         </div>
     </div>
 
+    <!-- add Reply Modal -->
+    <div class="modal fade" id="reply" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="inclusion_s_form">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New Message</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">To</label>
+                            <input type="text" name="reply_name" class="form-control shadow-none" required disabled />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Subject</label>
+                            <input type="text" name="reply_subject" class="form-control shadow-none" required disabled />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Reply</label>
+                            <textarea name="reply_desc" class="form-control shadow-none" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="reset" class="btn text-secondary shadow-none" data-bs-dismiss="modal">CANCEL</button>
+                        <button type="submit" class="btn custom-bg text-black shadow-none"><i class="bi bi-send-check-fill" style="color: black;"></i> SUBMIT</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        window.onload = function() {
-        <?php if (isset($_SESSION['alert'])): ?>
-            alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
-            <?php unset($_SESSION['alert']); ?>
-        <?php endif; ?>
-        };
+    window.onload = function() {
+    <?php if (isset($_SESSION['alert'])): ?>
+        alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
+        <?php unset($_SESSION['alert']); ?>
+    <?php endif; ?>
+};
     </script>
 
 
