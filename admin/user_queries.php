@@ -40,8 +40,34 @@ if(isset($_GET['seen'])){
     }
 }
 
-if(isset($_GET['del']))
-{
+// if(isset($_GET['del']))
+// {
+//     $frm_data = filteration($_GET);
+    
+//         if($frm_data['del'] == 'all'){
+//             $q = "DELETE FROM `user_queries`";
+//             if(mysqli_query($con, $q)){
+//                 alert('success', 'All data deleted !');
+//             }
+//             else{
+//                 alert('error', 'Operation Failed!');
+//             }
+    
+//         }
+//         else{
+//             $q = "DELETE FROM `user_queries` WHERE `sr_no`=?";
+//             $values = [$frm_data['del']];
+//             if(delete($q, $values, 'i')){
+//                 alert('success', 'Data deleted !');
+//             }
+//             else{
+//                 alert('error', 'Operation Failed!');
+//             }
+//         }
+
+// }
+
+if (isset($_GET['del'])) {
     $frm_data = filteration($_GET);
     
     // Handle delete all scenario
@@ -162,7 +188,7 @@ if(isset($_GET['del']))
                                         <th scope="col">Email</th>
                                         <th scope="col" width="20%">Subject</th>
                                         <th scope="col" width="30%">Message</th>
-                                        <th scope="col" >Date</th>
+                                        <th scope="col">Date</th>
                                         <th scope="col" width="15%">Action</th>
                                     </tr>
                                 </thead> 
@@ -251,12 +277,23 @@ if(isset($_GET['del']))
     </div>
 
     <script>
-    window.onload = function() {
-    <?php if (isset($_SESSION['alert'])): ?>
-        alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
-        <?php unset($_SESSION['alert']); ?>
-    <?php endif; ?>
-};
+        window.onload = function() 
+        {
+            <?php if (isset($_SESSION['alert'])): ?>
+                alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
+                <?php unset($_SESSION['alert']); ?>
+            <?php endif; ?>
+        };
+    
+        document.addEventListener('click', function (e) 
+        {
+            if (e.target.classList.contains('reply-btn')) 
+            {
+                const button = e.target;
+                document.querySelector('input[name="reply_name"]').value = button.getAttribute('data-name');
+                document.querySelector('input[name="reply_subject"]').value = button.getAttribute('data-subject');
+            }
+        });
     </script>
 
 
