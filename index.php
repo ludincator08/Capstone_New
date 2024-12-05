@@ -23,6 +23,7 @@
       }
     }
   </style>
+
 </head>
 
 <body class="bg-light">
@@ -39,7 +40,7 @@
             $path = CAROUSEL_IMG_PATH;
             echo <<< data
               <div class="swiper-slide">
-                <img src="$path$row[image]"  style="width: 1356px; height: 417px; object-fit: cover;" class="w-100 d-block" />
+                <img src="$path$row[image]"  style="width: 100%; height: 417px; object-fit: cover;" class="w-100 d-block" />
               </div>
             data;
             // style="height: 240px; object-fit: cover;" //add that in img to adjust that height of the image
@@ -53,7 +54,7 @@
   <div class="container availability-form">
     <div class="row">
       <div class="col-lg-12 bg-white shadow p-4 rounded mb-5">
-        <h5 class="mb-4">Check Booking Availability</h5>
+        <h5 class="mb-4">Check Reservation Availability</h5>
         <form>
           <div class="row align-items-end">
             <div class="col-lg-4 mb-3">
@@ -88,7 +89,7 @@
             <div class="col-lg-1 mb-lg-3 mt-2">
               <button
                 type="submit"
-                class="btn text-white shadow-none custom-bg">
+                class="btn text-white shadow-none custom-bg pop">
                 Submit
               </button>
             </div>
@@ -112,7 +113,7 @@
           Voluptate error aut, hic facere iste sequi vero?
         </p>
         <div class="col-lg-12 mt-5">
-          <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">Read More >>></a>
+          <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none pop">Read More >>></a>
         </div>
       </div>
       <!-- Img -->
@@ -160,14 +161,14 @@
           if(isset($_SESSION['login']) && $_SESSION['login'] == true){
             $login = 1;
           }
-          $reserve_btn = "<button onclick='checkLoginToReserve($login, $facility_data[id])' class='btn btn-sm text-white custom-bg shadow-none'>Reserve Now</button>";
+          $reserve_btn = "<button onclick='checkLoginToReserve($login, $facility_data[id])' class='btn btn-sm text-white custom-bg shadow-none pop'>Reserve Now</button>";
         }
 
         // Print Facility Card
         echo <<< data
-          <div class="col-lg-4 col-md-6 my-3">
+          <div class="col-lg-4 col-md-6 my-3 pop">
             <div class="card border-0 shadow" style="max-width: 350px; margin: auto">
-              <img src="$facilities_thumbnail" class="card-img-top" alt="... " />
+              <img src="$facilities_thumbnail" style="height: 197px; object-fit: cover;" class="card-img-top" alt="... " />
               <div class="card-body">
                 <h5>$facility_data[name]</h5>
                 <h6 class="mb-4">₱$facility_data[price] per hour</h6>
@@ -192,7 +193,7 @@
                 </div>
                 <div class="d-flex justify-content-evenly mb-2">
                   $reserve_btn
-                  <a href="facilities_detail.php?id=$facility_data[id]" class="btn btn-sm btn-outline-dark shadow-none">More Details</a>
+                  <a href="facilities_detail.php?id=$facility_data[id]" class="btn btn-sm btn-outline-dark shadow-none pop">More Details</a>
                 </div>
               </div>
             </div>
@@ -205,7 +206,7 @@
       ?>
 
       <div class="col-lg-12 text-center mt-5">
-        <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Facilities >>></a>
+        <a href="facilities.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none pop">More Facilities >>></a>
       </div>
     </div>
   </div>
@@ -218,12 +219,12 @@
       <?php
 
         $res = mysqli_query($con, "SELECT * FROM `inclusions` ORDER BY `id` DESC LIMIT 5");
-        $path = FACILITIES_IMG_PATH;
+        $path = INCLUSIONS_IMG_PATH;
 
         while($row = mysqli_fetch_assoc($res))
         {
           echo <<< data
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
+            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3 pop">
               <img src="$path$row[icon]" width="60px">
               <h5 class="mt-3">$row[name]</h5>
             </div>
@@ -231,7 +232,7 @@
         }
       ?>
       <div class="col-lg-12 text-center mt-5">
-        <a href="inclusions.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Inclusions >>></a>
+        <a href="inclusions.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none pop">More Inclusions >>></a>
       </div>
     </div>
   </div>
@@ -246,7 +247,7 @@
 
         <div class="swiper-slide bg-white p-4">
           <div class="profile d-flex align-items-center mb-3">
-            <img src="" alt="Testimonials" width="30px">
+            <img src="images/users/IMG_44030.jpeg" alt="Testimonials" width="30px">
             <h6 class="m-0 ms-2">Random user1</h6>
           </div>
           <p>
@@ -263,7 +264,7 @@
         </div>
         <div class="swiper-slide bg-white p-4">
           <div class="profile d-flex align-items-center mb-3">
-            <img src="" alt="Testimonials" width="30px">
+            <img src="images/users/IMG_44030.jpeg" alt="Testimonials" width="30px">
             <h6 class="m-0 ms-2">Random user1</h6>
           </div>
           <p>
@@ -280,7 +281,7 @@
         </div>
         <div class="swiper-slide bg-white p-4">
           <div class="profile d-flex align-items-center mb-3">
-            <img src="" alt="Testimonials" width="30px">
+            <img src="images/users/IMG_44030.jpeg" alt="Testimonials" width="30px">
             <h6 class="m-0 ms-2">Random user1</h6>
           </div>
           <p>
@@ -299,7 +300,7 @@
       <div class="swiper-pagination"></div>
     </div>
     <div class="col-lg-12 text-center mt-5">
-      <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Testimonials >>></a>
+      <a href="about.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none pop">More Testimonials >>></a>
     </div>
   </div>
 
@@ -314,14 +315,14 @@
       <div class="col-lg-4 col-md-4">
         <div class="bg-white p-4 rounded mb-4">
           <h5 class="">Call us</h5>
-          <a href="tel: +<?= $contact_r['pn1']; ?>" class="d-inline-block mb-2 text-decoration-none text-dark">
+          <a href="tel: +<?= $contact_r['pn1']; ?>" class="d-inline-block mb-2 text-decoration-none text-dark pop">
             <i class="bi bi-telephone-fill"></i> +<?= $contact_r['pn1']; ?>
           </a>
           <br>
           <?php
             if($contact_r['pn2'] != 0){
               echo<<<data
-                <a href="tel: +$contact_r[pn2]" class="d-inline-block mb-2 text-decoration-none text-dark">
+                <a href="tel: +$contact_r[pn2]" class="d-inline-block mb-2 text-decoration-none text-dark pop">
                   <i class="bi bi-telephone-fill"></i> +$contact_r[pn2]
                 </a>
               data;
@@ -333,7 +334,7 @@
           <?php 
             if($contact_r['tw'] != ''){
               echo<<<data
-              <a href="$contact_r[tw]" target="_blank" class="d-inline-block mb-3">
+              <a href="$contact_r[tw]" target="_blank" class="d-inline-block mb-3 pop">
                 <span class="badge bg-light text-dark fs-6 p-2"><i class="bi bi-twitter me-1"></i>Twitter</span>
               </a>
               <br>
@@ -341,11 +342,11 @@
             }
           ?>
           
-          <a href="<?= $contact_r['fb'] ?>" target="_blank" class="d-inline-block mb-1">
+          <a href="<?= $contact_r['fb'] ?>" target="_blank" class="d-inline-block mb-1 pop">
             <span class="badge bg-light text-dark fs-6 p-2"><i class="bi bi-facebook me-1"></i>Facebook</span>
           </a>
           <br>
-          <a href="<?= $contact_r['insta'] ?>" target="_blank" class="d-inline-block">
+          <a href="<?= $contact_r['insta'] ?>" target="_blank" class="d-inline-block pop">
             <span class="badge bg-light text-dark fs-6 p-2"><i class="bi bi-instagram me-1"></i>Instagram</span>
           </a>
         </div>

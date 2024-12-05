@@ -34,12 +34,12 @@
           <iframe class="w-100 rounded mb-4" height="320px" src="<?= $contact_r['iframe'] ?>" loading="lazy"></iframe>
           <!-- Address Section -->
           <h5>Address</h5>
-          <a href="<?= $contact_r['gmap'] ?>" target="_blank" class="d-inline-block text-decoration-none text-dark mb-2">
+          <a href="<?= $contact_r['gmap'] ?>" target="_blank" class="d-inline-block text-decoration-none text-dark mb-2 pop">
             <i class="bi bi-geo-alt-fill"></i> <?= $contact_r['address'] ?>
           </a>
 
           <h5 class="mt-4">Call us</h5>
-          <a href="tel: +<?= $contact_r['pn1'] ?>" class="d-inline-block mb-2 text-decoration-none text-dark">
+          <a href="tel: +<?= $contact_r['pn1'] ?>" class="d-inline-block mb-2 text-decoration-none text-dark pop">
             <i class="bi bi-telephone-fill"></i> +<?= $contact_r['pn1'] ?>
           </a>
           <br>
@@ -47,7 +47,7 @@
           <?php 
           if($contact_r['pn2'] != 0){
             echo<<<data
-              <a href="tel: +$contact_r[pn2]" class="d-inline-block mb-2 text-decoration-none text-dark">
+              <a href="tel: +$contact_r[pn2]" class="d-inline-block mb-2 text-decoration-none text-dark pop">
                 <i class="bi bi-telephone-fill"></i> +$contact_r[pn2]
               </a>
             data;
@@ -55,7 +55,7 @@
           ?>
 
           <h5 class="mt-4">Email</h5>
-          <a href="mailto: <?= $contact_r['email'] ?>" class="d-inline-block mb-2 text-decoration-none text-dark">
+          <a href="mailto: <?= $contact_r['email'] ?>" class="d-inline-block mb-2 text-decoration-none text-dark pop">
             <i class="bi bi-envelope-fill"></i> <?= $contact_r['email'] ?>
           </a>
 
@@ -63,18 +63,18 @@
           <?php
           if($contact_r['tw'] != ''){
             echo <<< data
-            <a href="$contact_r[tw]" target="_blank" class="d-inline-block mb-3 text-dark fs-5 me-2">
+            <a href="$contact_r[tw]" target="_blank" class="d-inline-block mb-3 text-dark fs-5 me-2 pop">
               <i class="bi bi-twitter me-1"></i>
             </a>
             data;
           }
           ?>
           
-          <a href="<?= $contact_r['fb'] ?>" target="_blank" class="d-inline-block mb-3 text-dark fs-5 me-2">
+          <a href="<?= $contact_r['fb'] ?>" target="_blank" class="d-inline-block mb-3 text-dark fs-5 me-2 pop">
             <i class="bi bi-facebook me-1"></i>
           </a>
 
-          <a href="<?= $contact_r['insta'] ?>" target="_blank" class="d-inline-block text-dark fs-5">
+          <a href="<?= $contact_r['insta'] ?>" target="_blank" class="d-inline-block text-dark fs-5 pop">
             <i class="bi bi-instagram me-1"></i>
           </a>
         </div>
@@ -100,7 +100,7 @@
               <label class="form-label" style="font-weight: 500;">Messages</label>
               <textarea name="message" required class="form-control shadow-none" rows="5" style="resize: none;"></textarea>
             </div>
-            <button type="submit" name="send" class="btn text-white custom-bg mt-3">SEND</button>
+            <button type="submit" name="send" class="btn text-white custom-bg mt-3 pop">SEND</button>
           </form>
         </div>
       </div>

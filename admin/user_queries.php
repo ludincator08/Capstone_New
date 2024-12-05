@@ -29,90 +29,92 @@ if(isset($_GET['seen'])){
     }
 }
 
-if(isset($_GET['del'])){
+// if(isset($_GET['del']))
+// {
+//     $frm_data = filteration($_GET);
+    
+//         if($frm_data['del'] == 'all'){
+//             $q = "DELETE FROM `user_queries`";
+//             if(mysqli_query($con, $q)){
+//                 alert('success', 'All data deleted !');
+//             }
+//             else{
+//                 alert('error', 'Operation Failed!');
+//             }
+    
+//         }
+//         else{
+//             $q = "DELETE FROM `user_queries` WHERE `sr_no`=?";
+//             $values = [$frm_data['del']];
+//             if(delete($q, $values, 'i')){
+//                 alert('success', 'Data deleted !');
+//             }
+//             else{
+//                 alert('error', 'Operation Failed!');
+//             }
+//         }
+
+// }
+
+if (isset($_GET['del'])) {
     $frm_data = filteration($_GET);
-
-    if($frm_data['del'] == 'all'){
-        $q = "DELETE FROM `user_queries`";
-        if(mysqli_query($con, $q)){
-            alert('success', 'All data deleted !');
+    $sr_no = $frm_data['del'];
+    
+    // First, check if the query has been marked as read
+    $check_q = "SELECT `seen` FROM `user_queries` WHERE `sr_no` = ?";
+    
+    // Prepare the SQL statement
+    if ($stmt = mysqli_prepare($con, $check_q)) {
+        // Bind the parameter to the prepared statement
+        mysqli_stmt_bind_param($stmt, 'i', $sr_no);
+        
+        // Execute the statement
+        mysqli_stmt_execute($stmt);
+        
+        // Store the result
+        mysqli_stmt_store_result($stmt);
+        
+        // Check if any rows were returned
+        if (mysqli_stmt_num_rows($stmt) > 0) {
+            // Bind the result variable
+            mysqli_stmt_bind_result($stmt, $seen);
+            
+            // Fetch the result
+            mysqli_stmt_fetch($stmt);
+            
+            // Check if the query is marked as read
+            if ($seen != 1) {
+                alert('error', 'You must mark the query as read before deleting it.');
+            } else {
+                // If marked as read, proceed with deletion
+                $delete_q = "DELETE FROM `user_queries` WHERE `sr_no` = ?";
+                
+                // Prepare the delete query
+                if ($delete_stmt = mysqli_prepare($con, $delete_q)) {
+                    // Bind the parameter to the delete query
+                    mysqli_stmt_bind_param($delete_stmt, 'i', $sr_no);
+                    
+                    // Execute the delete statement
+                    if (mysqli_stmt_execute($delete_stmt)) {
+                        alert('success', 'Query deleted successfully.');
+                    } else {
+                        alert('error', 'Failed to delete query.');
+                    }
+                    
+                    // Close the delete statement
+                    mysqli_stmt_close($delete_stmt);
+                }
+            }
+        } else {
+            alert('error', 'Query not found.');
         }
-        else{
-            alert('error', 'Operation Failed!');
-        }
-
-    }
-    else{
-        $q = "DELETE FROM `user_queries` WHERE `sr_no`=?";
-        $values = [$frm_data['del']];
-        if(delete($q, $values, 'i')){
-            alert('success', 'Data deleted !');
-        }
-        else{
-            alert('error', 'Operation Failed!');
-        }
+        
+        // Close the select statement
+        mysqli_stmt_close($stmt);
+    } else {
+        alert('error', 'Failed to prepare the query.');
     }
 }
-
-// if (isset($_GET['del'])) {
-//     $frm_data = filteration($_GET);
-//     $sr_no = $frm_data['del'];
-    
-//     // First, check if the query has been marked as read
-//     $check_q = "SELECT `seen` FROM `user_queries` WHERE `sr_no` = ?";
-    
-//     // Prepare the SQL statement
-//     if ($stmt = mysqli_prepare($con, $check_q)) {
-//         // Bind the parameter to the prepared statement
-//         mysqli_stmt_bind_param($stmt, 'i', $sr_no);
-        
-//         // Execute the statement
-//         mysqli_stmt_execute($stmt);
-        
-//         // Store the result
-//         mysqli_stmt_store_result($stmt);
-        
-//         // Check if any rows were returned
-//         if (mysqli_stmt_num_rows($stmt) > 0) {
-//             // Bind the result variable
-//             mysqli_stmt_bind_result($stmt, $seen);
-            
-//             // Fetch the result
-//             mysqli_stmt_fetch($stmt);
-            
-//             // Check if the query is marked as read
-//             if ($seen != 1) {
-//                 alert('error', 'You must mark the query as read before deleting it.');
-//             } else {
-//                 // If marked as read, proceed with deletion
-//                 $delete_q = "DELETE FROM `user_queries` WHERE `sr_no` = ?";
-                
-//                 // Prepare the delete query
-//                 if ($delete_stmt = mysqli_prepare($con, $delete_q)) {
-//                     // Bind the parameter to the delete query
-//                     mysqli_stmt_bind_param($delete_stmt, 'i', $sr_no);
-                    
-//                     // Execute the delete statement
-//                     if (mysqli_stmt_execute($delete_stmt)) {
-//                         alert('success', 'Query deleted successfully.');
-//                     } else {
-//                         alert('error', 'Failed to delete query.');
-//                     }
-                    
-//                     // Close the delete statement
-//                     mysqli_stmt_close($delete_stmt);
-//                 }
-//             }
-//         } else {
-//             alert('error', 'Query not found.');
-//         }
-        
-//         // Close the select statement
-//         mysqli_stmt_close($stmt);
-//     } else {
-//         alert('error', 'Failed to prepare the query.');
-//     }
-// }
 
 
 ?>
@@ -172,6 +174,9 @@ if(isset($_GET['del'])){
                                         $seen = '';
                                         if($row['seen'] !=1){
                                             $seen = "<a href='?seen=$row[sr_no]' class='btn btn-sm rounded-pill btn-primary'>Mark as read</a> <br>";
+                                        }
+                                        if($row['seen'] ==1){
+                                            $seen = "<a href='?seen=$row[sr_no]' class='btn btn-sm rounded-pill btn-info'>Reply</a> <br>";
                                         }
                                         $seen .= "<a href='?del=$row[sr_no]' class='btn btn-sm rounded-pill btn-danger mt-2'>Delete</a>";
                                         echo <<< query

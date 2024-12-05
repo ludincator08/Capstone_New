@@ -22,7 +22,7 @@
     {
       if(this.responseText == 1)
         {
-          alert('success', 'Status toggled!');
+          alert('success', 'Status Changes!');
           get_users();
         }
       else{

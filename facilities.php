@@ -114,7 +114,7 @@
               if(isset($_SESSION['login']) && $_SESSION['login'] == true){
                 $login = 1;
               }
-              $reserve_btn = "<button onclick='checkLoginToReserve($login, $facility_data[id])' class='btn w-100 btn-sm text-white custom-bg shadow-none mb-2'>Reserve Now</button>";
+              $reserve_btn = "<button onclick='checkLoginToReserve($login, $facility_data[id])' class='btn w-100 btn-sm text-white custom-bg shadow-none mb-2 pop'>Reserve Now</button>";
             }
 
             echo <<< data
@@ -122,10 +122,10 @@
                 <div class="row g-0 p-3 align-items-center">
 
                   <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
-                    <img src="$facilities_thumbnail" alt="Thumbnail" class="img-fluid rounded" >
+                    <img src="$facilities_thumbnail" alt="Thumbnail" class="img-fluid rounded" style="height: 228px; object-fit: cover; width: 100%;">
                   </div>
                   <div class="col-md-5 px-lg-3 px-md-3 px-0">
-                    <h5 class="mb-4">$facility_data[name]</h5>
+                    <h4 class="mb-4">$facility_data[name]</h4>
                     <div class="facilities mb-3">
                       <h6 class="mb-1">Inclusions</h6>
                       $facilities_data 
@@ -143,7 +143,7 @@
                   <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                     <h6 class="mb-4">₱$facility_data[price] per hour</h6>
                     $reserve_btn
-                    <a href="facilities_detail.php?id=$facility_data[id]" class="btn w-100 btn-sm btn-outline-dark shadow-none">More Details</a>
+                    <a href="facilities_detail.php?id=$facility_data[id]" class="btn w-100 btn-sm btn-outline-dark shadow-none pop">More Details</a>
                   </div>
                 </div>
               </div>

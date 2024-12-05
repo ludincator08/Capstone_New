@@ -62,7 +62,7 @@
               while($img_res = mysqli_fetch_assoc($img_q)){
                 echo "
                   <div class='carousel-item $active_class'>
-                    <img src='".FACILITIES_IMG_PATH.$img_res['image']."' class='d-block w-100 rounded'>
+                    <img src='".FACILITIES_IMG_PATH.$img_res['image']."' class='d-block w-100 rounded' style='height: 406px; width: 100%; object-fit: cover; '>
                   </div>
                 ";
                 $active_class = '';
@@ -135,7 +135,7 @@
                 $login = 1;
               }
               echo <<< book
-                <a onclick='checkLoginToReserve($login, $facility_data[id])' class='btn w-100 text-white custom-bg shadow-none mb-1'>Reserve Now</a>
+                <a onclick='checkLoginToReserve($login, $facility_data[id])' class='btn w-100 text-white custom-bg shadow-none mb-1 pop'>Reserve Now</a>
               book;
             }
 
@@ -157,7 +157,7 @@
         <h5 class="mb-3">Reviews & Ratings</h5>
         <div>
           <div class="d-flex align-items-center mb-2">
-            <img src="images/facilities/IMG_41622.svg" width="30px">
+            <img src="images/users/IMG_44030.jpeg" width="30px">
             <h6 class="m-0 ms-2">Random user1</h6>
           </div>
           <p>
