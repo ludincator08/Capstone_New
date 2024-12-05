@@ -1,8 +1,8 @@
 <style>
     .pop:hover {
-      border-top-color: var(--teal) !important;
-      transform: scale(1.03);
-      transition: all 0.3s;
+    border-top-color: var(--teal) !important;
+    transform: scale(1.03);
+    transition: all 0.3s;
     }
 </style>
 <nav id="nav-bar" class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
@@ -43,7 +43,7 @@
                                 <ul class="dropdown-menu dropdown-menu-lg-end">
                                     <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                                     <li><a class="dropdown-item" href="booking.php">Booking</a></li>
-                                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                                    <li><a class="dropdown-item" id"test" href="#" onclick="confirmLogout()">Logout</a></li>
                                 </ul>
                             </div>
                         data;
@@ -196,3 +196,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    // // logoutButton.classList.remove('active');
+    // function confirmLogout() {
+    //     const confirmation = confirm("Are you sure you want to log out?");
+        
+    //     if (confirmation) {
+    //         window.location.href = 'logout.php';
+    //     }
+    //     // If canceled, do nothing (user stays logged in)
+    // }
+
+    function confirmLogout() {
+        const confirmation = confirm("Are you sure you want to log out?");
+        
+        if (confirmation) {
+            // Remove 'active' class from logout button before redirecting
+            const logoutButton = document.getElementById("test");
+            if (logoutButton) {
+                logoutButton.classList.remove('active');
+            }
+            window.location.href = 'logout.php';  // Perform the logout
+        }
+        // If canceled, do nothing (user stays logged in)
+    }
+
+</script>

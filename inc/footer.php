@@ -67,9 +67,17 @@
         setTimeout(remAlert, 3000);
     }
 
-    function remAlert(){
-        document.getElementsByClassName('alert')[0].remove();
+    // function remAlert(){
+    //     document.getElementsByClassName('alert')[0].remove();
+    // }
+    
+    function remAlert() {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+        alert.remove();
     }
+
+}
     
     function setActive(){
         let navbar = document.getElementById('nav-bar');
@@ -175,6 +183,7 @@
                 alert('error', 'Incorrect Password!');
             }
             else {
+                alert('success', 'Login successful!');
                 let fileUrl = window.location.href.split('/').pop().split('?').shift();
                 if(fileUrl == 'facilities_details.php'){
                     window.location =  window.location.href;

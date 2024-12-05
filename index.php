@@ -265,7 +265,7 @@
         <div class="swiper-slide bg-white p-4">
           <div class="profile d-flex align-items-center mb-3">
             <img src="images/users/IMG_44030.jpeg" alt="Testimonials" width="30px">
-            <h6 class="m-0 ms-2">Random user1</h6>
+            <h6 class="m-0 ms-2">Random user2</h6>
           </div>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -282,7 +282,24 @@
         <div class="swiper-slide bg-white p-4">
           <div class="profile d-flex align-items-center mb-3">
             <img src="images/users/IMG_44030.jpeg" alt="Testimonials" width="30px">
-            <h6 class="m-0 ms-2">Random user1</h6>
+            <h6 class="m-0 ms-2">Random user3</h6>
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+            Quas nihil tenetur rem. Tenetur itaque dignissimos reprehenderit
+            sequi quod natus et?
+          </p>
+          <div class="rating">
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+            <i class="bi bi-star-fill text-warning"></i>
+          </div>
+        </div>
+        <div class="swiper-slide bg-white p-4">
+          <div class="profile d-flex align-items-center mb-3">
+            <img src="images/users/IMG_44030.jpeg" alt="Testimonials" width="30px">
+            <h6 class="m-0 ms-2">Random user4</h6>
           </div>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit.
@@ -375,10 +392,10 @@
                       </div>
                       <div
                           class="mb-2 text-end">
-                          <button type="button" class="btn shadow-none me-2" data-bs-dismiss="modal">
+                          <button type="button" class="btn shadow-none me-2 pop" data-bs-dismiss="modal">
                               CANCEL
                           </button>
-                          <button type="submit" class="btn btn-dark shadow-none"> SUBMIT </button>
+                          <button type="submit" class="btn btn-dark shadow-none pop"> SUBMIT </button>
                       </div>
                   </div>
               </form>

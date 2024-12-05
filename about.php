@@ -93,7 +93,7 @@
           while($row = mysqli_fetch_assoc($about_r)){
             echo <<< data
               <div class="swiper-slide bg-white text-center overflow-hidden rounded">
-                <img src="$path$row[picture]" style="height: 370px; width: 300px; " class="w-100">
+                <img src="$path$row[picture]" style="height: 370px; width: auto; " class="w-100">
                 <h5 class="mt-2">$row[name]</h5>
               </div>
             data;
