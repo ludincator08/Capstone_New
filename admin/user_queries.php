@@ -160,7 +160,7 @@ if (isset($_GET['del'])) {
                                         <th scope="col" width="20%">Subject</th>
                                         <th scope="col" width="30%">Message</th>
                                         <th scope="col">Date</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col" width="15%">Action</th>
                                     </tr>
                                 </thead> 
                                 <tbody class="align-middle">
