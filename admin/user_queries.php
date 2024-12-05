@@ -277,24 +277,24 @@ if (isset($_GET['del'])) {
     </div>
 
     <script>
-        window.onload = function() 
+    window.onload = function() 
+    {
+        <?php if (isset($_SESSION['alert'])): ?>
+            alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
+            <?php unset($_SESSION['alert']); ?>
+        <?php endif; ?>
+    };
+   
+    document.addEventListener('click', function (e) 
+    {
+        if (e.target.classList.contains('reply-btn')) 
         {
-            <?php if (isset($_SESSION['alert'])): ?>
-                alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
-                <?php unset($_SESSION['alert']); ?>
-            <?php endif; ?>
-        };
-    
-        document.addEventListener('click', function (e) 
-        {
-            if (e.target.classList.contains('reply-btn')) 
-            {
-                const button = e.target;
-                document.querySelector('input[name="reply_name"]').value = button.getAttribute('data-name');
-                document.querySelector('input[name="reply_subject"]').value = button.getAttribute('data-subject');
-            }
-        });
-    </script>
+            const button = e.target;
+            document.querySelector('input[name="reply_name"]').value = button.getAttribute('data-name');
+            document.querySelector('input[name="reply_subject"]').value = button.getAttribute('data-subject');
+        }
+    });
+</script>
 
 
     <?php require('inc/scripts.php'); ?>

@@ -103,9 +103,9 @@
               </div>
             rating;
 
-            $fac_q = mysqli_query($con, "SELECT facility.name FROM `facilities` facility
-            INNER JOIN `facilities_inclusions` r_facility ON facility.id = r_facility.inclusions_id 
-            WHERE r_facility.facility_id = $facility_data[id]");
+            $fac_q = mysqli_query($con, "SELECT inclusion.name FROM `inclusions` inclusion
+            INNER JOIN `facilities_inclusions` r_inclusion ON inclusion.id = r_inclusion.inclusions_id 
+            WHERE r_inclusion.facility_id = $facility_data[id]");
 
             $facilities_data = "";
             while($fac_res = mysqli_fetch_assoc($fac_q)){

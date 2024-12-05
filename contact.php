@@ -10,6 +10,13 @@ if (!isset($_SESSION['form_token'])) {
     $_SESSION['form_token'] = bin2hex(random_bytes(32));
 }
 
+// Fetch user data if logged in (optional - only fill name and email for logged-in users)
+if (isset($_SESSION['uId'])) {
+    // Fetch user data
+    $user_res = select("SELECT * FROM `user_cred` WHERE `id`=? LIMIT 1", [$_SESSION['uId']], "i");
+    $user_data = mysqli_fetch_assoc($user_res);
+}
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
     // Validate the token
@@ -24,6 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
 
     // Process the form data using the filteration() function from db_config.php
     $frm_data = filteration($_POST);
+
+    if (isset($user_data)) {
+      $frm_data['name'] = $user_data['name'];
+      $frm_data['email'] = $user_data['email'];
+  }
 
     // Insert data into the database
     $q = "INSERT INTO `user_queries`(`name`, `email`, `subject`, `message`) VALUES (?,?,?,?)";
@@ -98,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
                     </a>
                     <h5 class="mt-4">Follow us</h5>
                     <?php
-                    if($contact_r['tw'] != ''){
+                    if($contact_r['tw'] != '') {
                         echo <<<data
                         <a href="$contact_r[tw]" target="_blank" class="d-inline-block mb-3 text-dark fs-5 me-2 pop">
                             <i class="bi bi-twitter me-1"></i>
@@ -123,11 +135,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
                         <input type="hidden" name="form_token" value="<?= $_SESSION['form_token'] ?>">
                         <div class="mt-3">
                             <label class="form-label" style="font-weight: 500;">Name</label>
-                            <input type="text" name="name" required class="form-control shadow-none" />
+                            <input type="text" name="name" value="<?= isset($user_data) ? $user_data['name'] : '' ?>" 
+                            <?= isset($user_data) ? 'disabled' : '' ?> required class="form-control shadow-none" />
                         </div>
                         <div class="mt-3">
                             <label class="form-label" style="font-weight: 500;">Email</label>
-                            <input type="email" name="email" required class="form-control shadow-none" />
+                            <input type="text" name="email" value="<?= isset($user_data) ? $user_data['email'] : '' ?>" 
+                            <?= isset($user_data) ? 'disabled' : '' ?> required class="form-control shadow-none" />
                         </div>
                         <div class="mt-3">
                             <label class="form-label" style="font-weight: 500;">Subject</label>

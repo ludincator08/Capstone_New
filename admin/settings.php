@@ -38,7 +38,7 @@ adminLogin();
                         <p class="card-text" id="site_title"></p>
                         <h6 class="card-subtitle mb-1 fw-bold">About us</h6>
                         <p class="card-text" id="site_about"></p>
-                    </div>
+                    </div> 
                 </div>
 
                 <!-- General Settings Modal -->
