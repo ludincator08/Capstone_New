@@ -9,8 +9,9 @@ if(isset($_GET['seen'])){
     if($frm_data['seen'] == 'all'){
         $q = "UPDATE `user_queries` SET `seen`=?";
         $sql = "SELECT * FROM `user_queries` WHERE sr_no = '?'";
-        $result = $con->query($sql);
+        $result = $con->query($sql);    
         $values = [1];
+        
         if(update($q, $values, 'i')){
             $_SESSION['alert'] = ['success', 'Mark all as read'];
         }
