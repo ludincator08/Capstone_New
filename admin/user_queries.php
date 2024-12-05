@@ -118,67 +118,6 @@ if(isset($_GET['del']))
     exit;
 }
 
-// if (isset($_GET['del'])) {
-//     $frm_data = filteration($_GET);
-//     $sr_no = $frm_data['del'];
-    
-//     // First, check if the query has been marked as read
-//     $check_q = "SELECT `seen` FROM `user_queries` WHERE `sr_no` = ?";
-    
-//     // Prepare the SQL statement
-//     if ($stmt = mysqli_prepare($con, $check_q)) {
-//         // Bind the parameter to the prepared statement
-//         mysqli_stmt_bind_param($stmt, 'i', $sr_no);
-        
-//         // Execute the statement
-//         mysqli_stmt_execute($stmt);
-        
-//         // Store the result
-//         mysqli_stmt_store_result($stmt);
-        
-//         // Check if any rows were returned
-//         if (mysqli_stmt_num_rows($stmt) > 0) {
-//             // Bind the result variable
-//             mysqli_stmt_bind_result($stmt, $seen);
-            
-//             // Fetch the result
-//             mysqli_stmt_fetch($stmt);
-            
-//             // Check if the query is marked as read
-//             if ($seen != 1) {
-//                 alert('error', 'You must mark the query as read before deleting it.');
-//             } else {
-//                 // If marked as read, proceed with deletion
-//                 $delete_q = "DELETE FROM `user_queries` WHERE `sr_no` = ?";
-                
-//                 // Prepare the delete query
-//                 if ($delete_stmt = mysqli_prepare($con, $delete_q)) {
-//                     // Bind the parameter to the delete query
-//                     mysqli_stmt_bind_param($delete_stmt, 'i', $sr_no);
-                    
-//                     // Execute the delete statement
-//                     if (mysqli_stmt_execute($delete_stmt)) {
-//                         alert('success', 'Query deleted successfully.');
-//                     } else {
-//                         alert('error', 'Failed to delete query.');
-//                     }
-                    
-//                     // Close the delete statement
-//                     mysqli_stmt_close($delete_stmt);
-//                 }
-//             }
-//         } else {
-//             alert('error', 'Query not found.');
-//         }
-        
-//         // Close the select statement
-//         mysqli_stmt_close($stmt);
-//     } else {
-//         alert('error', 'Failed to prepare the query.');
-//     }
-// }
-
-
 
 ?>
 
@@ -222,7 +161,7 @@ if(isset($_GET['del']))
                                         <th scope="col">Email</th>
                                         <th scope="col" width="20%">Subject</th>
                                         <th scope="col" width="30%">Message</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col" >Date</th>
                                         <th scope="col" width="15%">Action</th>
                                     </tr>
                                 </thead> 
@@ -269,12 +208,12 @@ if(isset($_GET['del']))
     </div>
 
     <script>
-    window.onload = function() {
-    <?php if (isset($_SESSION['alert'])): ?>
-        alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
-        <?php unset($_SESSION['alert']); ?>
-    <?php endif; ?>
-};
+        window.onload = function() {
+        <?php if (isset($_SESSION['alert'])): ?>
+            alert('<?= $_SESSION['alert'][0] ?>', '<?= $_SESSION['alert'][1] ?>');
+            <?php unset($_SESSION['alert']); ?>
+        <?php endif; ?>
+        };
     </script>
 
 

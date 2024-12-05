@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send'])) {
     // Process the form data using the filteration() function from db_config.php
     $frm_data = filteration($_POST);
 
+    if (isset($user_data)) {
+      $frm_data['name'] = $user_data['name'];
+      $frm_data['email'] = $user_data['email'];
+  }
+
     // Insert data into the database
     $q = "INSERT INTO `user_queries`(`name`, `email`, `subject`, `message`) VALUES (?,?,?,?)";
     $values = [$frm_data['name'], $frm_data['email'], $frm_data['subject'], $frm_data['message']];

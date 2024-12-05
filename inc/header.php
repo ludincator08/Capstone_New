@@ -43,7 +43,7 @@
                                 <ul class="dropdown-menu dropdown-menu-lg-end">
                                     <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                                     <li><a class="dropdown-item" href="booking.php">Booking</a></li>
-                                    <li><a class="dropdown-item" id"test" href="#" onclick="confirmLogout()">Logout</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="confirmLogout()">Logout</a></li>
                                 </ul>
                             </div>
                         data;
@@ -213,7 +213,7 @@
         
         if (confirmation) {
             // Remove 'active' class from logout button before redirecting
-            const logoutButton = document.getElementById("test");
+            const logoutButton = document.querySelector("a[onclick='confirmLogout()']");
             if (logoutButton) {
                 logoutButton.classList.remove('active');
             }
